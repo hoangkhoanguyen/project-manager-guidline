@@ -289,27 +289,144 @@ Version: 0.1 | Ngày: | Tác giả: | Status: Draft
 ## 1. Executive Summary
 [Tóm tắt 1 trang: vấn đề, giải pháp đề xuất, kỳ vọng kết quả]
 
+### ✅ VÍ DỤ Executive Summary (ĐÚNG)
+**Background:** 
+Nhân viên kho hiện tại phải tính tồn kho bằng Excel mỗi tuần, mất 3 giờ/lần và sai số ≈15%.
+
+**Proposed Solution:** 
+Xây dựng hệ thống quản lý kho tổng hợp với tính năng tự động tracking, báo cáo real-time, và tích hợp ERP.
+
+**Expected Business Impact:**
+- Giảm thời gian tính tồn từ 3h → 30 phút (90% giảm)
+- Tăng độ chính xác từ 85% → 99.5%
+- Tiết kiệm: 22.5M/tháng (3h × 15 người × 200k/h)
+- ROI: 6 tháng (Cost: 200M, monthly savings: 22.5M)
+
+**Timeline:** 4 tháng | **Budget:** 200M | **Priority:** P0
+
+---
+
 ## 2. Problem Statement
-**Vấn đề:** [Mô tả vấn đề từ góc nhìn user/business]
+**Vấn đề:** [Mô tả vấn đề từ góc nhìn user/business - KHÔNG nói giải pháp]
 **Đối tượng bị ảnh hưởng:** [Ai đang gặp vấn đề này?]
 **Tại sao phải giải quyết ngay:** [Business case — nếu không làm, điều gì xảy ra?]
+
+### ✅ VÍ DỤ Problem Statement (ĐÚNG)
+
+**Current Situation (As-Is):**
+Mỗi tuần thứ 5, nhân viên kho phải ngừng công việc bình thường để tính toàn bộ tồn kho. Quy trình:
+1. In out danh sách hàng hóa từ hệ thống (không update real-time) → 30 phút
+2. Đi từng kệ, kiểm tra hàng vật lý, ghi chú vào giấy → 2 giờ
+3. Sau đó về, nhập lại vào Excel, so sánh với hệ thống, tìm sai lệch → 30 phút
+
+**Problem:**
+- Quy trình thủ công này gây ra **15% sai số** giữa tồn kho thực tế và tồn kho trong hệ thống
+- Mất **3 giờ/tuần × 15 người = 45 giờ công/tuần** chỉ để tính tồn kho
+- Dữ liệu không real-time: quản lý lấy báo cáo ngày hôm trước, nhưng đến hôm nay đã có sự thay đổi
+
+**Đối tượng Bị Ảnh Hưởng:**
+- **15 nhân viên kho:** Phải làm công việc lặp lại, stress, dễ sai sót
+- **Quản lý kho:** Không có visibility real-time, báo cáo luôn delay 1 ngày
+- **Sales/Commercial:** Thường không biết tồn kho thực tế → Quote sai, oblige khách hàng, phải apologize
+
+**Tại Sao Phải Giải Quyết Ngay:**
+- **Tài chính:** Thua 22.5M/tháng tiền nhân công + overhead
+- **Khách hàng:** Đôi khi hứa hàng nhưng không có → customer satisfaction giảm, chảy máu khách
+- **Operasi:** Sai số 15% dẫn đến stock-out (không có hàng) hoặc over-stock (hàng nằm kho), cả hai đều mất tiền
+- **Nhân sự:** Team mệt mỏi, chất lượng công việc giảm, dễ tìm việc khác
+
+**If We Do Nothing (Scenario 6 tháng nữa):**
+- Thua thêm 135M (22.5M × 6)
+- Sai số còn cao → khách hàng sẽ chuyển sang đối thủ cạnh tranh
+- Nhân viên burnout → phải tuyển thêm hoặc increase lương để giữ người
+
+### ❌ VÍ DỤ Problem Statement (SAI)
+
+**SAI - Vì nó nói giải pháp:**
+```
+Problem: Nhân viên kho mất thời gian tính tồn kho bằng Excel.
+Solution: Chúng ta sẽ build một hệ thống với barcode scan, 
+database real-time, API tích hợp SAP, v.v.
+```
+
+**Lý do sai:**
+- "Barcode scan, database real-time, API tích hợp" ← Đây là **HOW (cách làm)**, không phải **WHAT (vấn đề)**
+- Phần này nên nằm ở Functional Requirements (Section 6), không phải Problem Statement
+- Problem Statement chỉ nói: "Vấn đề là gì, tại sao nó xảy ra, ai bị ảnh hưởng, tốn bao nhiêu tiền/time"
+
+---
 
 ## 3. Target Users & Personas
 [Reference đến User Persona đã làm ở Step 1.3]
 
+### ✅ VÍ DỤ Target Users & Personas
+
+**Primary Users:**
+- Warehouse Staff (15 người): Nhân viên kho hàng ngày sử dụng
+- Warehouse Manager (1 người): Quản lý kho, lấy report hàng ngày
+
+**Secondary Users:**
+- Sales/Commercial Team: Check tồn kho trước khi quote
+- Finance: Cần số liệu tồn kho cuối tháng để inventory valuation
+
+**Personas:**
+- **Minh (Warehouse Staff):** Đã làm kho 3 năm, không quen dùng công nghệ, prefer simple UI
+- **Linh (Warehouse Manager):** Cần report real-time, muốn visibility vào chi tiết từng SKU
+
+---
+
 ## 4. Goals & Success Metrics
 | Goal | Metric | Baseline hiện tại | Target sau 3 tháng |
 |------|--------|-------------------|-------------------|
-| [Goal] | [KPI] | [Số hiện tại] | [Số mục tiêu] |
+| Giảm thời gian tính tồn kho | Hours/week | 45 giờ/tuần | 5 giờ/tuần |
+| Tăng độ chính xác tồn kho | Accuracy % | 85% | 99.5% |
+| Cải thiện response time báo cáo | Data freshness | 1 ngày delay | Real-time |
+| Tiết kiệm chi phí nhân công | Monthly savings | 0 | 22.5M/tháng |
+
+### ✅ VÍ DỤ Goals & Success Metrics
+
+**Business Goal 1: Reduce Operational Cost**
+- **Metric:** Thời gian tính tồn kho (hours/week)
+- **Baseline:** 45 giờ/tuần (3 giờ × 15 người)
+- **Target:** 5 giờ/tuần (30 phút × 15 người)
+- **Why matters:** Tiết kiệm 40 giờ/tuần = 22.5M/tháng
+
+**Business Goal 2: Improve Data Quality**
+- **Metric:** Inventory Accuracy (%)
+- **Baseline:** 85% (sai số 15%)
+- **Target:** 99.5%
+- **Why matters:** Giảm stock-out, over-stock → tối ưu cash flow
+
+**Operational Goal 1: Enable Real-time Visibility**
+- **Metric:** Freshness của data tồn kho (lag time)
+- **Baseline:** 24 giờ (báo cáo hôm trước)
+- **Target:** Real-time (update tức thì khi có movement)
+- **Why matters:** Sales/Commercial có thể quote chính xác
 
 ## 5. Scope
-**In Scope (phiên bản này):**
+**In Scope (phiên bản v1.0 — 4 tháng đầu):**
 - [Feature 1]
 - [Feature 2]
 
 **Out of Scope (sẽ không làm trong phiên bản này):**
 - [Feature A] — lý do: [...]
 - [Feature B] — lý do: [...]
+
+### ✅ VÍ DỤ Scope
+
+**In Scope (v1.0):**
+- Hệ thống quản lý tồn kho cơ bản (thêm, xóa, sửa SKU)
+- Tính năng inventory count (manual, barcode scan)
+- Real-time dashboard cho manager (tồn kho hiện tại)
+- Export báo cáo (Excel, PDF)
+- User role: Warehouse Staff, Manager, Viewer (Sales)
+- Tích hợp cơ bản với ERP hiện tại (API sync)
+
+**Out of Scope (sẽ làm v2.0 nếu client hài lòng):**
+- **Multi-warehouse support** — lý do: Phase 1 chỉ focus 1 warehouse, multi-warehouse logic phức tạp, để v2
+- **Mobile app native** — lý do: Phase 1 web-based (responsive), native app có thêm test/deployment complexity, đẩy lên v2
+- **Advanced forecasting (AI-based demand planning)** — lý do: Cần data 6-12 tháng, chưa có baseline, v2 khi có data
+- **Integration với 3rd-party logistics** — lý do: Out of scope business, warehouse chỉ quản lý nội bộ
 
 ## 6. Functional Requirements
 ### Epic 1: [Tên]
@@ -322,11 +439,103 @@ Version: 0.1 | Ngày: | Tác giả: | Status: Draft
 ### Epic 2: [Tên]
 ...
 
+### ✅ VÍ DỤ Functional Requirements
+
+### Epic 1: Inventory Tracking & Management
+**US-001: Create/Add New SKU**
+As a **Warehouse Manager**, I want to **add a new product SKU** (name, code, unit, location), so that **the system has complete inventory list**
+
+- Acceptance Criteria:
+  - [ ] Manager có thể thêm SKU mới với: product name, SKU code, unit (pcs/box/kg), location in warehouse
+  - [ ] System không cho phép duplicate SKU code (validation)
+  - [ ] Hệ thống tự động assign quantity = 0 khi SKU được tạo (chưa có hàng vào kho)
+  - [ ] Manager có thể bulk upload SKU từ Excel (max 500 rows/lần)
+  - [ ] Log được ghi: ai tạo, khi nào, thay đổi gì
+
+- Priority: **P0 (Must Have)** — Nếu không có cơ bản này, không thể track gì cả
+
+---
+
+**US-002: Record Inventory Movement (In/Out)**
+As a **Warehouse Staff**, I want to **record khi hàng vào hoặc ra khỏi kho**, so that **tồn kho được update real-time**
+
+- Acceptance Criteria:
+  - [ ] Staff có thể ghi "Hàng vào kho" (receiving): Scan barcode or manual SKU input → nhập số lượng → confirm
+  - [ ] Staff có thể ghi "Hàng ra kho" (outbound): Scan SKU → nhập số lượng → confirm
+  - [ ] System check: nếu outbound quantity > tồn kho hiện tại → reject với error message rõ ràng
+  - [ ] Mỗi transaction ghi log: SKU, quantity, loại movement, người ghi, thời gian exact
+  - [ ] Real-time update: ngay sau khi confirm, dashboard manager thấy tồn kho mới
+  - [ ] Staff có thể undo/adjust trong 5 phút, sau đó cần manager approval
+
+- Priority: **P0 (Must Have)** — Core của hệ thống
+
+---
+
+**US-003: Barcode Scan (Optional Phase 1, Can defer to v1.1)**
+As a **Warehouse Staff**, I want to **scan barcode thay vì gõ SKU code**, so that **nhập liệu nhanh hơn, sai ít hơn**
+
+- Acceptance Criteria:
+  - [ ] System hỗ trợ barcode scanner (hardware: USB or Bluetooth)
+  - [ ] Khi scan → tự điền SKU code, chỉ cần nhập quantity
+  - [ ] Nếu scan invalid barcode (không match SKU nào) → popup warning
+  - [ ] Offline mode: nếu mất kết nối network, scanner vẫn hoạt động, sync khi có lại connection
+
+- Priority: **P1 (Should Have)** — Là improvement, nhưng không critical. Có thể defer sang v1.1 nếu deadline tight
+
+---
+
+### Epic 2: Reporting & Dashboard
+**US-004: Real-time Inventory Dashboard**
+As a **Warehouse Manager**, I want to **see current inventory level của mỗi SKU in real-time**, so that **biết tình hình kho bất cứ lúc nào**
+
+- Acceptance Criteria:
+  - [ ] Dashboard hiển thị: SKU name, current quantity, location, last updated time
+  - [ ] Có thể filter/search theo: SKU code, product name, location
+  - [ ] Có thể sort theo: quantity (cao→thấp hoặc thấp→cao), last updated, SKU name
+  - [ ] Highlight "low stock" items: nếu quantity < min threshold, show với màu đỏ
+  - [ ] Update frequency: Real-time (max 1 giây delay)
+  - [ ] Responsive design: xem được trên desktop (primary) và tablet (secondary), mobile (nice-to-have)
+
+- Priority: **P0 (Must Have)**
+
+---
+
+**US-005: Weekly Inventory Report**
+As a **Manager**, I want to **export weekly inventory report**, so that **gửi cho Finance cuối tuần**
+
+- Acceptance Criteria:
+  - [ ] Manager có thể chọn date range → generate báo cáo
+  - [ ] Report bao gồm: SKU code, name, opening qty, inbound, outbound, closing qty, variance
+  - [ ] Export format: Excel (CSV optional)
+  - [ ] Email report automatically khi generate (với recipient list configurable)
+  - [ ] Report schedule: có thể set auto-send mỗi Thứ 6 5PM
+
+- Priority: **P1 (Should Have)** — Important cho Finance, nhưng có thể manual first
+
 ## 7. Non-Functional Requirements
 - **Performance:** [Ví dụ: API response < 500ms ở P95]
 - **Security:** [Ví dụ: Tất cả data phải encrypt at rest]
 - **Availability:** [Ví dụ: 99.5% uptime]
 - **Scalability:** [Ví dụ: Hỗ trợ 1000 concurrent users]
+
+### ✅ VÍ DỤ Non-Functional Requirements
+
+| Tiêu chí | Requirement | Lý do |
+|----------|-------------|-------|
+| **Performance** | API response time < 200ms (P95) | Warehouse staff dùng barcode scanner, không thể chờ lâu, UX phải smooth |
+| | Dashboard load < 2 giây | Manager mở dashboard, cần thấy data ngay |
+| **Availability** | 99.5% uptime (tối đa 3.6 giờ downtime/tháng) | Kho hoạt động 8am-6pm, không thể down giữa giờ làm việc |
+| | Maintenance window: Thứ 7 10PM - Chủ nhật 2AM | Ngoài giờ hoạt động |
+| **Security** | Encrypt data at rest (AES-256) | Chứa dữ liệu hàng hóa, giá trị hàng |
+| | Encrypt data in transit (HTTPS/TLS 1.3) | Data phải bảo vệ khi truyền qua internet |
+| | Authentication: Password + 2FA cho Manager | Manager access sensitive report |
+| | Role-based access control (RBAC) | Warehouse staff không thể xóa transaction; Manager không thể edit inventory count |
+| | Audit log: Tất cả action ghi log không thể modify | Compliance & troubleshooting |
+| **Scalability** | Hỗ trợ ≥100 concurrent users | Peak time: afternoon shift (15 staff + manager + viewers) |
+| | Database: support ≥1 triệu SKU + 1 triệu transactions/tháng | Prepare cho growth |
+| **Usability** | UI simple, Warehouse staff (không tech-savvy) có thể dùng trong 1 giờ training | Minh (persona) không quen tech, phải dễ dùng |
+| **Browser Support** | Chrome, Firefox, Safari, Edge (latest 2 versions) | Warehouse không control IT infra, staff dùng browser nào cũng được |
+| **Mobile Responsive** | Desktop (primary), Tablet (secondary), Mobile (optional) | Manager có thể check dashboard từ office/mệet, staff dùng barcode scanner (không phone) |
 
 ## 8. Constraints & Assumptions
 **Constraints (ràng buộc cứng):**
